@@ -12,7 +12,9 @@
     "test": "jest"
   },
   "dependencies": {
-    "nuxt": "^2.0.0"
+    "axios": "^0.19.1",
+    "nuxt": "^2.0.0",
+    "vue-axios": "^2.1.5"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.0.0",
