@@ -1,9 +1,11 @@
 <template>
 
-<v-content>Register
+<v-content>
 <template>
+  
   <v-form v-model="valid">
     <v-container>
+      Register
       <v-row>
         <v-col
           cols="12"

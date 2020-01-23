@@ -6,22 +6,25 @@ const {google} = require('googleapis');
 
 
 // If modifying these scopes, delete token.json.
-const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
+const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
 const TOKEN_PATH = 'token.json';
 
-// Load client secrets from a local file.
-  fs.readFile('credentials.json', (err, content) => {
-    if (err) return console.log('Error loading client secret file:', err);
-    // Authorize a client with credentials, then call the Google Sheets API.
-    authorize(JSON.parse(content) , listBoxNumbers);
-    authorize(JSON.parse(content) , ampMeatsList);
-    
-
-  });
-
+fs.readFile('credentials.json', (err, content) => {
+  if (err) return console.log('Error loading client secret file:', err);
+  // Authorize a client with credentials, then call the Google Sheets API.
+  authorize(JSON.parse(content) , listBoxNumbers);
+  authorize(JSON.parse(content) , ampMeatsList);
+  authorize(JSON.parse(content) ,procurementSheetList);
+  authorize(JSON.parse(content) , vegProcList);
+  authorize(JSON.parse(content) , fruitProcList);
+  authorize(JSON.parse(content) , drummondsList);
+  authorize(JSON.parse(content) , cheesemanList);
+  authorize(JSON.parse(content) , shoppingList);
+ 
+});
 
 
 
@@ -91,6 +94,7 @@ function getNewToken(oAuth2Client, callback) {
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
     const rows = res.data.values;
+    console.log(rows)
     router.get('/', (req,res) => {
        res.send(rows)
 })
@@ -98,23 +102,45 @@ function getNewToken(oAuth2Client, callback) {
   });
 }
 
-async function updateListBoxNumbers(auth) {
+let numAmount ;
+
+router.post('/submit', (req,res) => {
+
+    numAmount = req.body.productQuantity
+    update() 
+    
+}) 
+
+
+function update () {
+  fs.readFile('credentials.json', (err, content) => {
+  if (err) return console.log('Error loading client secret file:', err);
+  authorize(JSON.parse(content) , updateListBoxNumbers);
+
+ 
+});}
+
+function updateListBoxNumbers(auth ) {
   const sheets = google.sheets({version: 'v4', auth});
-  await sheets.spreadsheets.values.update({
+   sheets.spreadsheets.values.update({
     spreadsheetId: '1JY_ZhE6kJkm90UCUJ6lFSKJMjUKVdM4lbUju3wGrhn4',
-    range: 'A:B',
+    range: 'Box Numbers!B1:B27',
     valueInputOption: 'RAW',
     resource:{
       values:[
-        // router.post('/', (req,res) => {
-        //   console.log(res.data)})
-
+        [numAmount[0]._value] ,[numAmount[1]._value] ,[numAmount[2]._value] ,[numAmount[3]._value] ,[numAmount[4]._value] ,[numAmount[5]._value] ,[numAmount[6]._value] ,
+        [numAmount[7]._value] ,[numAmount[8]._value] ,[numAmount[9]._value] ,[numAmount[10]._value] ,[numAmount[11]._value] ,[numAmount[12]._value] ,[numAmount[13]._value] ,
+        [numAmount[14]._value] ,[numAmount[15]._value] ,[numAmount[16]._value] ,[numAmount[17]._value] ,[numAmount[18]._value] ,[numAmount[19]._value] ,[numAmount[20]._value] ,
+        [numAmount[21]._value] ,[numAmount[22]._value] ,[numAmount[23]._value] ,[numAmount[24]._value] ,[numAmount[25]._value] ,[numAmount[26]._value] ,
+   
       ]
     }
   }
   
 );
 } 
+
+
 
 /**
  * Prints t spreadsheet:
@@ -150,18 +176,13 @@ async function procurementSheetList(auth) {
   const sheets = google.sheets({version: 'v4', auth});
   await sheets.spreadsheets.values.get({
     spreadsheetId: '1JY_ZhE6kJkm90UCUJ6lFSKJMjUKVdM4lbUju3wGrhn4',
-    range: 'Procument Sheet!A:D',
+    range: 'Procument Sheet!D:D',
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
     const rows = res.data.values;
-    if (rows.length) {
-      console.log('Name:');
-      rows.map((row) => {
-        console.log(`${row[0]}, ${row[1]} ,${row[2]}, ${row[3]}`);
-      });
-    } else {
-      console.log('No data found.');
-    }
+    router.get('/procurementlist', (req,res) => {
+      res.send(rows)
+    });
   });
 }
 
@@ -177,18 +198,14 @@ function fruitProcList(auth) {
   const sheets = google.sheets({version: 'v4', auth});
   sheets.spreadsheets.values.get({
     spreadsheetId: '1JY_ZhE6kJkm90UCUJ6lFSKJMjUKVdM4lbUju3wGrhn4',
-    range: 'Fruit Proc. List!A:D',
+    range: 'Fruit Proc. List!D:D',
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
     const rows = res.data.values;
-    if (rows.length) {
-      console.log('Name:');
-      rows.map((row) => {
-        console.log(`${row[0]}, ${row[1]} ,${row[2]}, ${row[3]}`);
-      });
-    } else {
-      console.log('No data found.');
-    }
+    router.get('/fruitList', (req,res) => {
+      res.send(rows)
+    });
+ 
   });
 }
 
@@ -200,22 +217,19 @@ function fruitProcList(auth) {
  * 
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
 //  */
-function vegProcList(auth) {
+async function vegProcList(auth) {
   const sheets = google.sheets({version: 'v4', auth});
-  sheets.spreadsheets.values.get({
+  await sheets.spreadsheets.values.get({
     spreadsheetId: '1JY_ZhE6kJkm90UCUJ6lFSKJMjUKVdM4lbUju3wGrhn4',
-    range: 'Fruit Proc. List!A:D',
+    range: 'Veg Proc. List!D:E',
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
     const rows = res.data.values;
-    if (rows.length) {
-      console.log('Name:');
-      rows.map((row) => {
-        console.log(`${row[0]}, ${row[1]} ,${row[2]}, ${row[3]}`);
-      });
-    } else {
-      console.log('No data found.');
-    }
+    router.get('/vegetableslist', (req,res) => {
+      res.send(rows)
+    });
+    
+ 
   });
 }
 
@@ -227,24 +241,23 @@ function vegProcList(auth) {
  * 
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
 //  */
-function shoppingList(auth) {
+async function shoppingList(auth) {
   const sheets = google.sheets({version: 'v4', auth});
-  sheets.spreadsheets.values.get({
+  await sheets.spreadsheets.values.get({
     spreadsheetId: '1JY_ZhE6kJkm90UCUJ6lFSKJMjUKVdM4lbUju3wGrhn4',
-    range: 'Shopping!A:D',
+    range: 'Shopping!D3:D',
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
     const rows = res.data.values;
-    if (rows.length) {
-      console.log('Name:');
-      rows.map((row) => {
-        console.log(`${row[0]}, ${row[1]} ,${row[2]}, ${row[3]}`);
-      });
-    } else {
-      console.log('No data found.');
-    }
+    router.get('/shoppinglist', (req,res) => {
+      res.send(rows)
+    });
+    
+ 
   });
 }
+
+
 
 /**
  * Prints t spreadsheet:
@@ -258,18 +271,15 @@ function cheesemanList(auth) {
   const sheets = google.sheets({version: 'v4', auth});
   sheets.spreadsheets.values.get({
     spreadsheetId: '1JY_ZhE6kJkm90UCUJ6lFSKJMjUKVdM4lbUju3wGrhn4',
-    range: 'Cheeseman!A:D',
+    range: 'Cheeseman!A:E',
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
     const rows = res.data.values;
-    if (rows.length) {
-      console.log('Name:');
-      rows.map((row) => {
-        console.log(`${row[0]}, ${row[1]} ,${row[2]}, ${row[3]}`);
-      });
-    } else {
-      console.log('No data found.');
-    }
+    router.get('/cheesemanList', (req,res) => {
+      res.send(rows)
+    })
+
+ 
   });
 }
 
@@ -289,21 +299,14 @@ function drummondsList(auth) {
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
     const rows = res.data.values;
-    if (rows.length) {
-      console.log('Name:');
-      rows.map((row) => {
-        console.log(`${row[0]}, ${row[1]} `);
-      });
-    } else {
-      console.log('No data found.');
-    }
+    router.get('/drummondsList', (req,res) => {
+      res.send(rows)
+    });
+    
   });
 }
 
 
 
-
-router.post('/submit', (req,res) => {
-  console.log(req.body)})
 
 module.exports = router 
