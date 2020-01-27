@@ -1,13 +1,44 @@
 
-
 <template>
-  <v-content >
-    <v-container class="fill-height" fluid>
+
+  <v-content>
+
+      <div class="text-center">
+  
+   
+    <v-dialog
+      v-model="dialog"
+      hide-overlay
+      persistent
+      width="300"
+    >
+      <v-card
+        color="primary"
+        dark
+      >
+        <v-card-text>
+          Uploading data to googlesheets...
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mb-0"
+          ></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+  </div>
+    <v-container class="fill-height" fluid >
+        <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title class="title">
+         Box Numbers
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
       <v-row align="center" justify="center">
         <v-col class="text-center">
-           <v-btn depressed small color="red darken-3" class="ma-2" tile >Clear</v-btn>
           <template>
-              <v-simple-table>
+              <v-simple-table id="my-table">
                 <template v-slot:default>
                   <thead>
                     <tr>
@@ -17,50 +48,41 @@
                   </thead>
                   <tbody>
                     <tr v-for="(name , index) in names" :key="index">
-                      <td>
-                        <input type="text" v-model="name[0]"/>
+                      <td class="text-uppercase font-weight-bold">
+                        <input type="text" v-model="name[0]" />
                       </td>
 
                       <td>
-                        <v-text-field v-model="name[1]"  name="quantity" ></v-text-field>
+                        <v-text-field v-model="name[1]"  name="quantity"  ></v-text-field>
                       </td>
                     </tr>
                   </tbody>
+              
                 </template>
-              </v-simple-table>
+              </v-simple-table>  
+             <span 
+              @click="dialog = true"
+              :disabled="dialog"
+              :loading="dialog">
+              <v-btn 
            
+              @click="formSubmit "
+              
+          >Submit</v-btn>
+          </span>
           </template>
-        <v-alert 
-        value="alert"
-      color="teal darken-3"
-      dark
-      border="top"
-      icon="mdi-check"
-      transition="scale-transition"
-      dismissible
-                >
-      Successful Calculation
-    </v-alert>
-    <v-btn
-        @click.prevent="formSubmit"
-        depressed 
-        small color="teal darken-3"
-        class="ma-2" 
-        tile
-      >
-      Submit
-      </v-btn>
-
         </v-col>
       </v-row>
+         
     </v-container>
+       
   </v-content>
 </template>
 
 
 <script>
-import axios from "axios";
-import io from 'socket.io-client';
+
+import axios from 'axios'
 
 export default {
   props: {
@@ -68,42 +90,49 @@ export default {
   },
 
   data: () => ({
-    alert: false,
+
     name: "",
+    names: "",
     box: "",
     quantity: "",
     rows: null,
-    names: null,
     drawer: null,
-    socket: io('localhost:5000')
+    dialog: false,
   
   }),
   mounted(){
-
-     axios
-      .get("http://localhost:5000/")
-      .then(response => {
-        this.names = response.data;
-      })
-      .catch(error => console.log(error));
+    this.showNames()
   },
+  watch: {
+      dialog (val) {
+        if (!val) return
+
+        setTimeout(() => (this.dialog = false), 4000)
+      },
+    },
 
   methods: {
 
+    showNames(){
+     axios
+        .get("http://localhost:5000/")
+        .then(response => {
+          this.names = response.data;
+        })
+        .catch(error => console.log(error));
+        },
+
     formSubmit(e) {
+
       let currentObj = this;
-    
-   
       axios
         .post("http://localhost:5000/submit", {
           productQuantity: document.getElementsByName("quantity")
+          
         })
         .catch(error => console.log(error));
-      console.log(name);
-
-    },
-
-     
+      
+    }
   }
 };
 </script>

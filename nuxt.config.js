@@ -29,8 +29,7 @@ export default {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [
-  ],
+  plugins: ['~/firebase/index.js'],
   /*
   ** Nuxt.js dev-modules
   */
@@ -49,7 +48,7 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      dark:true,
       themes: {
         dark: {
           primary: colors.blue.darken2,

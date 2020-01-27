@@ -2,6 +2,14 @@
 
 <v-content>
 <template>
+        <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title class="title">
+        Amp Meats
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+  
 
 
   <v-simple-table dense>
@@ -9,7 +17,7 @@
           <tbody>
                       <tr v-for="(name , index) in names" :key="index">
               
-                        <td>
+                        <td class="text-uppercase font-weight-bold">
                           <input  v-model="name[0]">
                           <input v-model="name[1]"  >
                           <input v-model="name[2]"  >

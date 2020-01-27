@@ -8,7 +8,7 @@
 
           <tbody>
                       <tr v-for="(name , index) in names" :key="index">
-                        <td>
+                        <td class="text-uppercase font-weight-bold">
                           {{name[0]}}
                           {{name[1]}}
                         

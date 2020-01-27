@@ -1,17 +1,46 @@
-
-
 <template>
 
+
+
   <v-app id="inspire">
-  
+    <div>
+
+       <v-btn
+           small
+          top
+          left
+       
+          fab
+          dark
+          @click.stop="drawer = !drawer"
+          
+
+        >
+                <v-icon >mdi-menu</v-icon>
+        </v-btn>
+    </div>
+      </v-row>
     <v-navigation-drawer
-     :expand-on-hover="expandOnHover"
-     :mini-variant="miniVariant"
- 
+     
+     absolute
+     temporary=""
      v-model="drawer" 
      app
      >
+           <v-btn
+       
+          small
+          top
+          left
+          fab
+          dark
+          
+          @click.stop="drawer = !drawer"
+        >
+                <v-icon>mdi-window-close</v-icon>
+        </v-btn>
       <v-list dense>
+
         <nuxt-link to="/" style="text-decoration: none" >
           <v-list-item link >
             <v-list-item-action>
@@ -92,43 +121,59 @@
             </v-list-item-content>
           </v-list-item>
         </nuxt-link>
-        <nuxt-link to="/login" style="text-decoration: none">
-          <v-list-item link>
+         <v-divider></v-divider>
+        <nuxt-link v-if="!isAuthenticated" to="/login" style="text-decoration: none">
+          <v-list-item >
             <v-list-item-action>
               <v-icon>mdi-account</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title>Login</v-list-item-title>
+              <v-list-item-title>
+                <v-btn block>Login</v-btn>
+              </v-list-item-title>
+        
             </v-list-item-content>
           </v-list-item>
         </nuxt-link>
-            <nuxt-link to="/register" style="text-decoration: none" >
-          <v-list-item link  >
+        
+
+         <nuxt-link v-else to="/login" style="text-decoration: none">
+          <v-list-item >
             <v-list-item-action>
               <v-icon>mdi-account</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title>Register</v-list-item-title>
+              <v-list-item-title>
+                <v-btn @click="logout" block>Logout</v-btn>
+              </v-list-item-title>
+        
+            </v-list-item-content>
+          </v-list-item>
+        </nuxt-link>
+
+            <nuxt-link to="/register" style="text-decoration: none" >
+          <v-list-item   >
+            <v-list-item-action>
+              <v-icon>mdi-account-plus</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title><v-btn block>Register</v-btn></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </nuxt-link>
       </v-list>
     </v-navigation-drawer>
 
-    <!-- <v-container class="fill-height">
-      <v-row align="center" justify="center">
-        <v-btn color="green darken-2" left dark @click.stop="drawer = !drawer">
-          <v-icon>mdi-hamburger</v-icon>
-        </v-btn>
-      </v-row>
-    </v-container> -->
+ 
 
-    <v-content>
+    <v-content >
      <nuxt/>
     </v-content>
-    <v-footer color="green darken-2" app>
-      <span class="white--text">&copy; FreshProcurement 2019</span>
+
+    <v-footer color="teal darken-3" app>
+      <span class="white--text ">&copy; FreshProcurement 2019</span>
     </v-footer>
+ 
   </v-app>
 
 </template>
@@ -142,12 +187,23 @@ export default {
   },
 
   data: () => ({
-        drawer: true,
+
+        drawer: null,
         miniVariant: false,
         expandOnHover: true,
         background: false,
-      
-  })
+  }),
+  computed: {
+    isAuthenticated() {
+      return this.$store.getters.isAuthenticated;
+    }
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('userSignOut')
+    }
+  }
 };
 </script>
+
 
