@@ -115,7 +115,7 @@ export default {
 
     showNames(){
      axios
-        .get("http://localhost:5000/")
+        .get("https://safe-atoll-22739.herokuapp.com/")
         .then(response => {
           this.names = response.data;
         })
@@ -126,7 +126,7 @@ export default {
 
       let currentObj = this;
       axios
-        .post("http://localhost:5000/submit", {
+        .post("https://safe-atoll-22739.herokuapp.com/submit", {
           productQuantity: document.getElementsByName("quantity")
           
         })
