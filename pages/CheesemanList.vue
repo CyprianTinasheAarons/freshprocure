@@ -33,13 +33,11 @@
   </v-simple-table>
 
 </template>
-          <v-btn  class="ma-2" tile color="teal darken-3" dark @click="submitWhatsapp" type="submit"><v-icon>mdi-whatsapp</v-icon>Share on Whatsapp</v-btn>
+           <a href @click="submitWhatsapp" :href="href" >
+          <v-btn  class="ma-2" tile color="teal darken-3" dark type="submit"><v-icon>mdi-whatsapp</v-icon>Share on Whatsapp</v-btn></a>
            <v-btn  class="ma-2" tile color="red darken-3" dark  type="submit" @click="printPdf">Print Pdf</v-btn>
          
-
 </v-content>
-       
-
    </template>
 
 <script>
@@ -52,6 +50,7 @@
 
   export default {
     data: () => ({
+      href: '',
       names: ''
     }),
   mounted() {
@@ -59,11 +58,14 @@
    
   },
   methods: {
+  
+  submitWhatsapp() {
 
-  submitWhatsapp(){
-    href="https://api.whatsapp.com/send?text=" +`${this.names}`    
-  },
+    this.href = "https://api.whatsapp.com/send?text="+`${this.names}`
 
+  }
+,
+  
   getCheeseman(){
     axios
       .get("https://safe-atoll-22739.herokuapp.com/cheesemanList")
