@@ -33,8 +33,9 @@
   </v-simple-table>
 
 </template>
-          <v-btn  class="ma-2" tile color="teal darken-3" dark  type="submit"><v-icon>mdi-whatsapp</v-icon>Share on Whatsapp</v-btn>
+          <v-btn  class="ma-2" tile color="teal darken-3" dark @click="submitWhatsapp" type="submit"><v-icon>mdi-whatsapp</v-icon>Share on Whatsapp</v-btn>
            <v-btn  class="ma-2" tile color="red darken-3" dark  type="submit" @click="printPdf">Print Pdf</v-btn>
+         
 
 </v-content>
        
@@ -46,7 +47,7 @@
  import jsPDF from 'jspdf';
  import 'jspdf-autotable';
  const doc = new jsPDF();
-doc.autoTable({html: '#my-table'});
+ doc.autoTable({html:'#my-table'});
 
 
   export default {
@@ -58,6 +59,10 @@ doc.autoTable({html: '#my-table'});
    
   },
   methods: {
+
+  submitWhatsapp(){
+    href="https://api.whatsapp.com/send?text=" +`${this.names}`    
+  },
 
   getCheeseman(){
     axios
