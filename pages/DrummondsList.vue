@@ -43,7 +43,7 @@
     }),
         mounted() {
     axios
-      .get("http://localhost:5000/drummondsList")
+      .get("https://safe-atoll-22739.herokuapp.com/drummondsList")
       .then(response => {
         this.names = response.data;
       })

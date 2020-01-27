@@ -61,7 +61,7 @@ doc.autoTable({html: '#my-table'});
 
   getCheeseman(){
     axios
-      .get("http://localhost:5000/cheesemanList")
+      .get("https://safe-atoll-22739.herokuapp.com/cheesemanList")
       .then(response => {
         this.names = response.data;
       })

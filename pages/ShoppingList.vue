@@ -38,7 +38,7 @@ import axios from "axios"
     }),
   mounted() {
     axios
-      .get("http://localhost:5000/shoppingList")
+      .get("https://safe-atoll-22739.herokuapp.com/shoppingList")
       .then(response => {
         this.names = response.data;
       })
