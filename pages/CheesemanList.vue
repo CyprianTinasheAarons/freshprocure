@@ -15,15 +15,13 @@
     <template v-slot:default>
           <tbody>
                       <tr v-for="(name , index) in names" :key="index">
-              
                         <td class="text-uppercase font-weight-bold">
                           <input  v-model="name[0]">
                           <input v-model="name[1]"  >
                           <input v-model="name[2]"  >
                           <input v-model="name[3]"  >
                           <input v-model="name[4]"  >
-                          <input v-model="name[5]">
-                         
+                          <input v-model="name[5]">   
                         </td>
                       </tr>
                     </tbody>
@@ -45,9 +43,6 @@
  import jsPDF from 'jspdf';
  import 'jspdf-autotable';
  const doc = new jsPDF();
- doc.autoTable({html:'#my-table'});
-
-
   export default {
     data: () => ({
       href: '',
@@ -76,8 +71,12 @@
     }
     ,
     printPdf(){
-   
-      doc.save('table.pdf');
+    doc.autoTable({
+      styles: {fillColor: [255, 0, 0]},
+      columnStyles: {0: {halign: 'center', fillColor: [0, 255, 0]}}, 
+      margin: {top: 10},
+      body: [this.names] });
+      doc.save('cheeseman.pdf');
     }
   }
 

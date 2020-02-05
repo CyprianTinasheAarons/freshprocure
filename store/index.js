@@ -1,12 +1,12 @@
 import Vuex from 'vuex'
 import firebase from 'firebase'
-import router from '../pages/';
+import router from '../pages';
 
 const store = () => {
   return new Vuex.Store({
     state: () => ({
         user: null,
-        isAuthenticated: true,
+        isAuthenticated: false,
     }),
     mutations: {
         setUser(state, payload) {
@@ -26,8 +26,7 @@ const store = () => {
                 .then(user => {
                     commit('setUser', user);
                     commit('setIsAuthenticated', true);
-                    router.push('/login');
-                    
+                
                 })
                 .catch(() => {
                     commit('setUser', null);
@@ -41,8 +40,7 @@ const store = () => {
                 .then(user => {
                     commit('setUser', user);
                     commit('setIsAuthenticated', true);
-                    router.push('/');
-                
+                 
                 })
                 .catch(() => {
                     commit('setUser', null);
@@ -69,9 +67,30 @@ const store = () => {
     getters: {
         isAuthenticated(state) {
             return state.user !== null && state.user !== undefined;
+           
         }
     }
   })
 }
 
+
 export default store
+
+
+// meta: {
+//     authRequired: true
+// }
+
+// router.beforeEach((to, from, next) => {
+//     if (to.matched.some(record => record.meta.authRequired)) {
+//         if (!store.state.user) {
+//             next({
+//                 path: '/sign-in'
+//             });
+//         } else {
+//             next();
+//         }
+//     } else {
+//         next();
+//     }
+// });

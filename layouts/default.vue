@@ -1,9 +1,6 @@
 <template>
-
-
-
-  <v-app id="inspire">
-    <div>
+<v-app id="inspire" >
+    <div  v-if="isAuthenticated">
 
        <v-btn
            small
@@ -21,7 +18,7 @@
     </div>
       </v-row>
     <v-navigation-drawer
-     
+    
      absolute
      temporary=""
      v-model="drawer" 
@@ -48,16 +45,6 @@
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title>Home</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </nuxt-link>
-        <nuxt-link to="/procurementlist" style="text-decoration: none" >
-          <v-list-item link >
-            <v-list-item-action>
-              <v-icon>mdi-chevron-double-right</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Procurement List</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </nuxt-link>
@@ -122,7 +109,7 @@
           </v-list-item>
         </nuxt-link>
          <v-divider></v-divider>
-        <nuxt-link v-if="!isAuthenticated" to="/login" style="text-decoration: none">
+        <!-- <nuxt-link to="/login" style="text-decoration: none">
           <v-list-item >
             <v-list-item-action>
               <v-icon>mdi-account</v-icon>
@@ -135,9 +122,8 @@
             </v-list-item-content>
           </v-list-item>
         </nuxt-link>
-        
+         -->
 
-         <nuxt-link v-else to="/login" style="text-decoration: none">
           <v-list-item >
             <v-list-item-action>
               <v-icon>mdi-account</v-icon>
@@ -149,9 +135,9 @@
         
             </v-list-item-content>
           </v-list-item>
-        </nuxt-link>
+      
 
-            <nuxt-link to="/register" style="text-decoration: none" >
+            <nuxt-link  v-if="!isAuthenticated" to="/register" style="text-decoration: none" >
           <v-list-item   >
             <v-list-item-action>
               <v-icon>mdi-account-plus</v-icon>

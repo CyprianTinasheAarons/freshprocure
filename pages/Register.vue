@@ -41,6 +41,7 @@
         </v-col>
          </v-row>
       <v-btn  class="ma-2" tile color="red darken-3" dark  :disabled="!valid" @click.prevent="submit" type="submit">Register</v-btn>
+                <nuxt-link   to="/login" style="text-decoration: none" >Login</nuxt-link>
     </v-container>
   </v-form>
 </template>

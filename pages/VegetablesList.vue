@@ -27,8 +27,9 @@
     </template>
   </v-simple-table>
 </template>
-      <v-btn  class="ma-2" tile color="teal darken-3" dark  type="submit"><v-icon>mdi-whatsapp</v-icon>Share on Whatsapp</v-btn>
-   <v-btn  class="ma-2" tile color="red darken-3" dark  type="submit"><v-icon>mdi-printer</v-icon>Print Pdf</v-btn>
+       <a href @click="submitWhatsapp" :href="href" >
+          <v-btn  class="ma-2" tile color="teal darken-3" dark type="submit"><v-icon>mdi-whatsapp</v-icon>Share on Whatsapp</v-btn></a>
+           <v-btn  class="ma-2" tile color="red darken-3" dark  type="submit" @click="printPdf">Print Pdf</v-btn>
 </v-content>
     
 
@@ -36,11 +37,15 @@
 
 <script>
 
-import axios from "axios"
+import axios from "axios";
+  import jsPDF from 'jspdf';
+  import 'jspdf-autotable';
+  const doc = new jsPDF();
 
   export default {
     data: () => ({
-      names: ''
+      names: '',
+           href: ''
     
     })
     ,
@@ -52,6 +57,21 @@ import axios from "axios"
       })
       .catch(error => console.log(error));
 
+  },
+  methods: {
+  submitWhatsapp() {
+
+    this.href = "https://api.whatsapp.com/send?text="+`${this.names}`
+
+  } ,  
+  printPdf(){
+    doc.autoTable({
+      styles: {fillColor: [255, 0, 0]},
+      columnStyles: {0: {halign: 'center', fillColor: [0, 255, 0]}}, 
+      margin: {top: 10},
+      body: [this.names] });
+      doc.save('vegetables.pdf');
+    }
   }
 
   }
