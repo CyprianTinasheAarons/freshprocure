@@ -1,6 +1,5 @@
 import Vuex from 'vuex'
 import firebase from 'firebase'
-import router from '../pages';
 
 const store = () => {
   return new Vuex.Store({
@@ -77,20 +76,3 @@ const store = () => {
 export default store
 
 
-// meta: {
-//     authRequired: true
-// }
-
-// router.beforeEach((to, from, next) => {
-//     if (to.matched.some(record => record.meta.authRequired)) {
-//         if (!store.state.user) {
-//             next({
-//                 path: '/sign-in'
-//             });
-//         } else {
-//             next();
-//         }
-//     } else {
-//         next();
-//     }
-// });

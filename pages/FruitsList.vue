@@ -69,10 +69,9 @@ import axios from 'axios'
   } ,  
   printPdf(){
     doc.autoTable({
-      styles: {fillColor: [255, 0, 0]},
-      columnStyles: {0: {halign: 'center', fillColor: [0, 255, 0]}}, 
-      margin: {top: 10},
-      body: [this.names] });
+        theme: 'striped',
+      body:[this.names]
+       });
       doc.save('fruits.pdf');
     }
   }

@@ -11,9 +11,9 @@
       </v-list-item>
   
 
-  <v-simple-table dense id="my-table" >
+  <v-simple-table dense >
     <template v-slot:default>
-          <tbody>
+          <tbody  >
                       <tr v-for="(name , index) in names" :key="index">
                         <td class="text-uppercase font-weight-bold">
                           <input  v-model="name[0]">
@@ -71,11 +71,9 @@
     }
     ,
     printPdf(){
-    doc.autoTable({
-      styles: {fillColor: [255, 0, 0]},
-      columnStyles: {0: {halign: 'center', fillColor: [0, 255, 0]}}, 
-      margin: {top: 10},
-      body: [this.names] });
+    doc.autoTable({ 
+      theme: 'striped',
+      body:[this.names]});
       doc.save('cheeseman.pdf');
     }
   }
