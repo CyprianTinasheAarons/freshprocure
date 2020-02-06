@@ -62,11 +62,12 @@
     this.href = "https://api.whatsapp.com/send?text="+`${this.names}`
 
   } ,  
-  printPdf(){
+ printPdf(){
+    let i ;
+    for(i=0 ;i<this.names.length ; i++){
     doc.autoTable({
-      theme: 'striped',
-      body:[this.names]
-       });
+      body:[ this.names[i]] });}
+
       doc.save('drummonds.pdf');
     }
   }

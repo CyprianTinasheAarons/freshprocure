@@ -69,13 +69,13 @@
     this.href = "https://api.whatsapp.com/send?text="+`${this.names}`
 
   } ,  
-  printPdf(){
+ printPdf(){
+    let i ;
+    for(i=0 ;i<this.names.length ; i++){
     doc.autoTable({
-      styles: {fillColor: [255, 0, 0]},
-      columnStyles: {0: {halign: 'center', fillColor: [0, 255, 0]}}, 
-      margin: {top: 10},
-      body: [this.names] });
-      doc.save('ampmeats.pdf');
+      body:[ this.names[i]] });}
+
+      doc.save('amp.pdf');
     }
   }
   }

@@ -1,4 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
+import store from './store/index.js'
 
 export default {
 
@@ -73,6 +74,7 @@ export default {
     extend (config, ctx) {
     }
   }
-
-
+   
+  
+  
 }

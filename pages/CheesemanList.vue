@@ -71,9 +71,11 @@
     }
     ,
     printPdf(){
-    doc.autoTable({ 
-      theme: 'striped',
-      body:[this.names]});
+    let i ;
+    for(i=0 ;i<this.names.length ; i++){
+    doc.autoTable({
+      body:[ this.names[i]] });}
+
       doc.save('cheeseman.pdf');
     }
   }

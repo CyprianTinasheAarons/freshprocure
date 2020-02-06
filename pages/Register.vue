@@ -75,6 +75,8 @@
                     password: this.password
                 })
             }
+
+            this.$router.push('/')
         }}
 
   }

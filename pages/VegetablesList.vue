@@ -45,8 +45,7 @@ import axios from "axios";
   export default {
     data: () => ({
       names: '',
-           href: ''
-    
+      href: ''
     })
     ,
   mounted() {
@@ -60,13 +59,12 @@ import axios from "axios";
   },
   methods: {
   submitWhatsapp() {
-    let i ;
-    for(i=0 ;i<this.names.length ; i++){
-
-    this.href = "https://api.whatsapp.com/send?text="+`${this.names[i]}`
+ 
+    
+      this.href = "https://api.whatsapp.com/send?text="+`${this.names}`
     }
 
-  } ,  
+   ,  
   printPdf(){
     let i ;
     for(i=0 ;i<this.names.length ; i++){
